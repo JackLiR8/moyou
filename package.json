@@ -1,0 +1,33 @@
+{
+  "name": "moyu",
+  "version": "1.0.0",
+  "description": "A CLI built with node.js",
+  "bin": {
+    "moyu": "bin/moyu.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JackLiR8/moyu.git"
+  },
+  "keywords": [
+    "CLI"
+  ],
+  "author": "jacklir8",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JackLiR8/moyu/issues"
+  },
+  "homepage": "https://github.com/JackLiR8/moyu#readme",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^7.2.0",
+    "execa": "^5.0.0",
+    "inquirer": "^8.0.0",
+    "listr": "^0.14.3",
+    "minimist": "^1.2.5",
+    "ncp": "^2.0.0"
+  }
+}
