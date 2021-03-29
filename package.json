@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "A CLI built with node.js",
   "bin": {
-    "moyu": "bin/moyou.js"
+    "syt": "bin/syt.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JackLiR8/moyu.git"
+    "url": "git+https://github.com/JackLiR8/syt.git"
   },
   "keywords": [
     "CLI"
@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/JackLiR8/moyu/issues"
   },
-  "homepage": "https://github.com/JackLiR8/moyu#readme",
+  "homepage": "https://github.com/JackLiR8/syt#readme",
   "dependencies": {
     "chalk": "^4.1.0",
     "commander": "^7.2.0",
