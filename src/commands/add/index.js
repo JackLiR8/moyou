@@ -1,20 +1,20 @@
 const execa = require('execa')
 const Listr = require('listr')
-const fs = require('fs')
+const fs = require('fs').promises
+const path = require('path')
 const ncp = require('ncp')
 const { promisify } = require('util')
 const { info, error, success } = require('../../utils')
 
-const ADD_NAMES = ['axios', 'page', 'router']
+const ADD_NAMES = ['axios', 'router']
 
-const access = promisify(fs.access)
 const copy = promisify(ncp)
 
 
 async function add(name, options) {
   // validate name
   if (!ADD_NAMES.includes(name)) {
-    error(`invalid argument! use \`moyu add <${ADD_NAMES.join(' | ')}>\`.`)
+    error(`invalid argument! use \`syt add <${ADD_NAMES.join(' | ')}>\`.`)
     process.exit(1)
   }
 
@@ -59,14 +59,32 @@ function normalizeOpts(name, opts) {
  * @returns {Array} An array of tasks
  */
 function queueTasks(name, opts) {
-  let taskList = []
-  // TODO queue tasks
+  const templateDir = path.resolve(
+    __dirname,
+    '../../templates/',
+    name
+  )
+  const targetDir = `${process.cwd()}/src/${name}`
+
+  let taskList = [
+    // {
+    //   title: 'Create directory',
+    //   task: (ctx, task) => fs.mkdir(targetDir).catch(err => {
+    //     task.skip(`Create directory failed: ${err}`)
+    //   })
+    // },
+    {
+      title: 'Copy template files',
+      task: () => copyTemplateFiles(templateDir, targetDir)
+    },
+  ]
 
   // add install dependency task
   if (opts.dep) {
     taskList.push({
       title: 'Installing dependency',
-      task: () => installDep(opts.dep, opts.useNpm ? 'npm' : 'yarn')
+      task: () => installDep(opts.dep, opts.useNpm ? 'npm' : 'yarn'),
+      skip: () => opts.skipInstall ? 'Skip install dependency' : undefined,
     })
   }
 
@@ -92,7 +110,7 @@ async function installDep(dep, pkgManager = 'yarn') {
  * @param {String} targetDir
  * @returns Promise 
  */
-async function copyTemplateFiles(templateDir, targetDir = process.cwd()) {
+async function copyTemplateFiles(templateDir, targetDir) {
   return copy(templateDir, targetDir, {
     clobber: false,
   })
@@ -102,7 +120,7 @@ async function copyTemplateFiles(templateDir, targetDir = process.cwd()) {
 
 module.exports = (...args) => {
   return add(...args).catch(err => {
-    if (!process.env.MOYU_TEST) {
+    if (!process.env.SYT_TEST) {
       process.exit(1)
     }
   })
