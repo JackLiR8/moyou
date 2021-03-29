@@ -61,7 +61,7 @@ function normalizeOpts(name, opts) {
 function queueTasks(name, opts) {
   const templateDir = path.resolve(
     __dirname,
-    '../../templates/',
+    'templates',
     name
   )
   const targetDir = `${process.cwd()}/src/${name}`
